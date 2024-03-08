@@ -6,6 +6,7 @@ struct ListNode{
     ListNode* next;
 };
 
+//在linkedlist中插入一个值
 void insert(ListNode* head, int val){
     ListNode* p1= new ListNode;
     p1=head;
@@ -36,6 +37,7 @@ else{
     
 
 }
+//在linkedlist中清除特定的值
 ListNode* clear(ListNode* head, int data){
     ListNode* p1=head;
     ListNode* prev= nullptr;
@@ -65,7 +67,7 @@ ListNode* clear(ListNode* head, int data){
     return head;
     }
 
-
+//反转链表
 ListNode* reverseList(ListNode* pHead){
   ListNode* temp1=nullptr;
   ListNode* temp2= new ListNode;
@@ -122,38 +124,9 @@ ListNode* getIntersectNode(ListNode* head1, ListNode* head2){
         p2=p2->next;
 
     }
+    return nullptr; 
 }
 
-ListNode* clear(ListNode* head, int val){
-    ListNode* p=head;
-   
-    ListNode* prev= nullptr;
-
-    if(p->next!=nullptr&& p->value==val){
-        ListNode* temp= new ListNode;
-        temp=p;
-        p=p->next;
-        delete temp;
-    }
-    head=p;
-
-    while(p!=nullptr){
-        if(p->value==val){
-            ListNode* temp=p;
-            prev->next=p->next;
-            p=p->next;
-            delete temp;
-        }
-        else{
-            prev=p;
-            p=p->next;
-
-        }
-    }
-    return head;
-        
-    
-}
 
 bool check_cycle(ListNode* head){ //这个是判断链表中存不存在环
     ListNode*p1 = new ListNode;
@@ -198,30 +171,24 @@ ListNode* get_cycle_node(ListNode* head ){
          }
       }
   }
+  return nullptr;
+
 }
 
 ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {//其实有的时候可以想一想用recursive的方法去做 特别是涉及到连续的插入或者删除 就是要注意
-     if(list1==nullptr && list2==nullptr){
-        return nullptr;
-     }
-     else if(list1==nullptr){
-        return list2;
-     }
-     else if(list2==nullptr){
-        return list1;
-     }
-    
-   if(list1->value<=list2->value){
-    list1->next= mergeTwoLists(list1->next, list2);
-    return list1;
-   }
-   else{
-     list2->next= mergeTwoLists(list2->next, list2);
-     return list2;
-
-   }
-        
+     if(list1==NULL|| list2==NULL){
+            return list1? list1: list2;
+        }
+        if(list1->value< list2->value){
+            list1->next= mergeTwoLists(list1->next,list2);
+            return list1;
+        }
+        else{
+            list2->next=mergeTwoLists(list1, list2->next);
+            return list2;
+        }
     }
+    
 
      bool isPalindrome(ListNode* head) {
         ListNode* p1=head;
@@ -246,6 +213,38 @@ ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {//其实有的时候�
         return true;
         
      }
+    
+    ListNode* findTail(ListNode* head){//寻找尾节点
+        ListNode* p=head; //定义一个新的节点来遍历整个linklist
+        while(p->next!=nullptr){ //当p->next != null的时候就是直接遍历到尾节点
+            p=p->next;
+
+        }
+        return p;
+    }
+    void addEnd(ListNode* head, int value){
+        ListNode* p=head;
+        ListNode* newAdd= new ListNode;
+        newAdd->value=value;
+        while(p->next!=nullptr){
+            p=p->next;
+        }
+        p->next=newAdd;
+        newAdd->next=nullptr;
+
+        
+
+    }
+    
+    void print(ListNode* head){
+        ListNode* p= head;
+        while(p!=nullptr){
+            cout<< p->value;
+            p=p->next;
+
+        }
+        cout << endl;
+    }
 
 
 
@@ -256,7 +255,29 @@ ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {//其实有的时候�
 
 
 int main(){
-    cout << "heel"<< endl;
+   ListNode* head1=new ListNode;
+   head1->value=1;
+   head1->next=new ListNode;
+   head1->next->value=3;
+   head1->next->next=new ListNode;
+   head1->next->next->value= 5;
 
-    return 0;
+  
+   ListNode* head2=new ListNode;
+   head2->value=5;
+   head2->next=new ListNode;
+   head2->next->value=8;
+   head2->next->next=new ListNode;
+   head2->next->next->value= 4;
+   
+   ListNode* newHead= mergeTwoLists(head1,head2);
+    print(newHead);
+    cout << endl;
+
+
+
+   //ListNode* clearList= clear(head1,3);
+    
+   return 0; 
+
 }
