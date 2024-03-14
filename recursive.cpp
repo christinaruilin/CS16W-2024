@@ -174,6 +174,142 @@ int binarySearch(const vector<int> & vec, int target, int low, int high){
         }
     }
 }
+string hecToDec2(int decimal){ //用recursive的方法写
+  if(decimal==0){
+    return "";
+  }
+  string hex= hecToDec2(decimal/16);
+  int remainder = decimal%16;
+  if(remainder<10){
+    hex+= char('0'+remainder);
+  }
+  else{
+    hex+=char('A'+remainder-10);
+  }
+  return hex;
+}
+//Print all Palindromic Partitions of a String using Backtracking
+bool isPalindromic(string& s1){
+    int i=0;
+    int j=s1.size()-1;
+    while(i<j){
+        if(s1[i]!=s1[j]){
+            return false;
+        }
+        i++;
+        j--;
+    }
+    return true;
+}
+
+void printAll(vector<vector<string>> & res, string &s, int index, vector<string> & cur){
+  if(index==s.size()){
+    res.push_back(cur);
+    return;
+  }
+  string t;
+  for(int i=index; i <s.size();i++){
+    t.push_back(s[i]);
+  }
+  if(isPalindromic(t)){
+    cur.push_back(t);
+    printAll(res,s,index+1,cur);
+    cur.pop_back();
+  }
+}
+
+ListNode* deleteKthNode(ListNode* head,int k){
+    if(head==nullptr){
+        return nullptr;
+    }
+    if(k==1 && head->next==nullptr){
+        return NULL;
+    }  
+    
+    head->next=deleteKthNode(head->next,k-1);
+    if(k==1){
+      ListNode* temp=head->next;
+      delete head;
+      return temp;
+    }
+
+
+   
+    
+     return head;
+    
+}
+
+ListNode* deleteKthNodeNonRecursive(ListNode* head,int k){
+    ListNode* p=head;
+    ListNode* prev=nullptr;
+    int count=1;
+    if(k==count){
+        head=head->next;
+        delete p;
+        return head;
+    }
+
+    while(count!=k){
+        prev=p;
+        p=p->next;
+        count++;
+    }
+    prev->next=p->next;
+    delete p;
+    return head;
+}
+void sumTriangleNum (int A[],int n) {//n代表的是这个array的长度以及高度
+ if(n<=1){
+    return;
+ }
+ int temp[n-1];
+ for(int i=0; i <n-1; i++){
+    int x=A[i]+A[i+1];
+    temp[i]=x;
+ } //这个相当于把第二层给求出来了
+ //因为递归要告诉具体要干什么事情在递归前面
+ sumTriangleNum(temp,n-1);
+ 
+ for (int i = 0; i < n ; i++)
+        {
+            if(i == n - 1)
+                cout << A[i] << " "; //最后一个是打印空格 然后其余的是打印逗号
+            else
+            cout << A[i] << ", ";
+        }
+                   
+        cout << endl;
+
+
+}
+void printAll(int k, int n, int arr[], int& len){
+    if(len==k){
+        for(int i=0; i < k; i++){
+            cout << arr[i];
+        }
+        cout << endl;
+    }
+    else{
+        int i= (len==0)? 1: arr[len-1]+1;
+        len++;
+        while(i<=n){
+            arr[len-1]=i;
+            printAll(n,k,arr,len);
+            i++
+
+        }
+
+    }
+
+
+}
+
+
+
+
+
+
 int main(){
     string s= "hello";
     cout<< sizeof(s)<< endl;

@@ -107,24 +107,24 @@ void printCommonPart(ListNode* head1, ListNode* head2){
 }
 
 ListNode* getIntersectNode(ListNode* head1, ListNode* head2){
-    ListNode* p1= head1;
-    ListNode* p2=head2;
 
-     if(p1==nullptr || p2==nullptr){
-        return nullptr;
+    if(head1==nullptr || head2==nullptr){
+        return nullptr; //就是说这两个没有相交的极端情况
     }
-
-    
-
-    while(p1!=nullptr&& p2!= nullptr){
-        if(p1->value==p2->value){
-            return p1;
+    //这道题的关键就是说要用nested loop把这个解出来
+    //首先就是一个不动 然后nested loop里面的动 然后比较是不是一样 如果是一样的话那就是intersection了
+   //nested loop的关键就是按住一个不动然后看那个动的和那个不动的是不是一样
+    while(head2){
+        ListNode*temp=head1;
+        while(temp){
+            if(temp==head2){
+                return head2;
+            }
+            temp=temp->next;
         }
-        p1=p1-> next;
-        p2=p2->next;
-
+        head2=head2->next;
     }
-    return nullptr; 
+    return nullptr;
 }
 
 
@@ -193,7 +193,7 @@ ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {//其实有的时候�
      bool isPalindrome(ListNode* head) {
         ListNode* p1=head;
         if(head==nullptr || head->next==nullptr){
-            return head;
+            return false;
         }
         ListNode* temp1= nullptr;
         while(p1!=nullptr){
