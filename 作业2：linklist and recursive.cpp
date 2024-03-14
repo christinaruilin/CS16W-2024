@@ -194,3 +194,16 @@ bool isPalindrome(string s1, int start, int end)
     3 (153 370 371 407) 
     5 (54748 92727 93084) 
 */
+//这道题的解决思路就在于要一位一位的传然后要要有计数的 来维持现在的数字情况
+void flowerNumber(int n, int i, int cur, int sum){
+   if(i>n){
+   if(cur==sum){//这个意思就是base case如果当sum等于cur的时候也就是满足水仙花数 就可以进行打印   
+       cout << cur<< endl;
+   }
+   return ; //代表着停止就不再generate 数了
+
+   }
+for(int j=(i==1)?1:0; j <10; j++){ //这种递归的题就相当于这种排列组合 然后一位一位的插入
+    flowerNumber(n,i+1,cur*10+j,sum+pow(j,n));//cur现在的值和sum现在的值 这两个值相等那就符合条件
+}
+}
